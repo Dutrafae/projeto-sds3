@@ -1,47 +1,49 @@
-package com.arth.dsvendas.entities;
+package com.arth.dsvendas.dto;
 
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import com.arth.dsvendas.entities.Sale;
 
-
-@Entity
-@Table(name = "tb_sales")
-public class Sale {
+public class SaleDTO {
 	
-	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	private Integer visited;
 	private Integer deals;
 	private Double amount;
 	private LocalDate date;
 	
-	@ManyToOne
-	@JoinColumn(name = "seller_id")
-	private Seller seller;
+	private SellerDTO seller;
 	
-	public Sale() {	
+	
+	public SaleDTO() {
 	}
-
-	public Sale(Long id, Integer visited, Integer deals, Double amount, LocalDate date) {
+	
+	public SaleDTO(Long id, Integer visited, Integer deals, Double amount, LocalDate date, SellerDTO seller) {
 		this.id = id;
 		this.visited = visited;
 		this.deals = deals;
 		this.amount = amount;
 		this.date = date;
+		this.seller = seller;
+	}
+	
+	public SaleDTO(Sale entity) {
+		this.id = entity.getId();
+		this.visited = entity.getVisited();
+		this.deals = entity.getDeals();
+		this.amount = entity.getAmount();
+		this.date = entity.getDate();
+		this.seller = new SellerDTO(entity.getSeller());
 	}
 
 	public Long getId() {
-		return this.id;
+		return id;
 	}
-	
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Integer getVisited() {
 		return visited;
 	}
@@ -74,22 +76,13 @@ public class Sale {
 		this.date = date;
 	}
 
-	public Seller getName() {
+	public SellerDTO getSeller() {
 		return seller;
 	}
 
-	public void setName(Seller name) {
-		this.seller = name;
-	}
-
-	public Seller getSeller() {
-		return seller;
-	}
-	
-	public void setSeller(Seller seller) {
+	public void setSeller(SellerDTO seller) {
 		this.seller = seller;
 	}
-	
 	
 	
 }
